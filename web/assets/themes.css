@@ -1,0 +1,255 @@
+/* Quartzite shell themes.
+ *
+ * The shell is a canvas. It frames documents that bring their own design
+ * languages — 26 imported artifacts, arbitrary bundles, viewers that look like
+ * teletext or a card catalogue. So the shell recedes: dark, low-hue, minimal
+ * chrome. A shell with opinions argues with everything it holds.
+ *
+ * Design languages live in the *content* layer instead, as viewer documents.
+ * See store/viewers/. That is where expressiveness belongs.
+ *
+ * All themes are dark by design. Structure lives in app.css and never varies.
+ */
+
+:root {
+  --stack-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, system-ui, sans-serif;
+  --stack-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --stack-serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+
+  --dur: 120ms;
+  --ease: cubic-bezier(.4, 0, .2, 1);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   VOID — the default. Near-black, essentially hueless.
+
+   One accent, used only for focus and state. No gradients, no
+   texture, no ornament. Every pixel of personality on screen
+   should belong to the document, not the frame.
+   ───────────────────────────────────────────────────────────── */
+
+:root,
+:root[data-theme="void"] {
+  /* Void means no hue, not low contrast. A narrow value band reads as murky
+     rather than austere, so the range here is deliberately near-maximal:
+     almost-black ground, almost-white text, one honest step between. */
+  --bg: #050506;
+  --bg-raised: #0d0d10;
+  --bg-inset: #0a0a0c;
+  --line: #26262d;
+  --line-soft: #1a1a1f;
+
+  --fg: #f2f2f5;
+  --fg-dim: #8e8e99;
+  --fg-faint: #5c5c66;
+
+  --accent: #ffffff;
+  --accent-deep: #ffffff;
+  --store: #7fbf95;
+  --vault: #9a93b8;
+  --warn: #c98b8b;
+
+  --prism-a: #cfcfd6;
+  --prism-b: #cfcfd6;
+  --prism-c: #cfcfd6;
+
+  --font-ui: var(--stack-sans);
+  --font-body: var(--stack-sans);
+  --font-display: var(--stack-sans);
+  --font-mono: var(--stack-mono);
+
+  --fs-base: 13.5px;
+  --fs-sm: 12px;
+  --fs-xs: 10.5px;
+  --fs-h1: 18px;
+  --fs-stat: 24px;
+  --lh: 1.55;
+  --lh-read: 1.62;
+
+  --weight-heading: 600;
+  --tracking-h: -.15px;
+  --label-transform: uppercase;
+  --label-tracking: .09em;
+  --label-weight: 600;
+
+  --radius: 5px;
+  --radius-sm: 4px;
+  --radius-pill: 20px;
+  --border: 1px;
+  --shadow-card: none;
+  --shadow-pop: 0 14px 36px rgba(0, 0, 0, .6);
+
+  --topbar-h: 44px;
+  --sidebar-w: 200px;
+  --pad-card: 13px;
+  --pad-row-y: 8px;
+  --pad-row-x: 11px;
+  --gap: 10px;
+  --main-pad: 16px 18px 40px;
+  --read-width: none;
+
+  --tag-fill: transparent;
+  --tag-border: var(--line);
+  --row-fill: transparent;
+  --row-hover-border: var(--line);
+
+  --focus-ring: #cfcfd6;
+}
+
+/* Void keeps its hands off. The only emphasis is focus. */
+:root[data-theme="void"] .doc-row:hover { background: var(--bg-raised); }
+:root[data-theme="void"] .nav-item.active { box-shadow: inset 2px 0 0 var(--accent); background: none; }
+
+/* ─────────────────────────────────────────────────────────────
+   TERMINAL — monospace throughout, phosphor, zero radius.
+   ───────────────────────────────────────────────────────────── */
+
+:root[data-theme="terminal"] {
+  --bg: #06080a;
+  --bg-raised: #0a0d10;
+  --bg-inset: #040609;
+  --line: #1c2b23;
+  --line-soft: #142019;
+
+  --fg: #cbe7d4;
+  --fg-dim: #74a186;
+  --fg-faint: #4c6f5b;
+
+  --accent: #4ade80;
+  --accent-deep: #22c55e;
+  --store: #4ade80;
+  --vault: #fbbf24;
+  --warn: #f87171;
+
+  --prism-a: #4ade80;
+  --prism-b: #22c55e;
+  --prism-c: #fbbf24;
+
+  --font-ui: var(--stack-mono);
+  --font-body: var(--stack-mono);
+  --font-display: var(--stack-mono);
+  --font-mono: var(--stack-mono);
+
+  --fs-base: 12.5px;
+  --fs-sm: 11.5px;
+  --fs-xs: 10.5px;
+  --fs-h1: 16px;
+  --fs-stat: 24px;
+  --lh: 1.5;
+  --lh-read: 1.6;
+
+  --weight-heading: 700;
+  --tracking-h: 0;
+  --label-transform: uppercase;
+  --label-tracking: .16em;
+  --label-weight: 700;
+
+  --radius: 0px;
+  --radius-sm: 0px;
+  --radius-pill: 0px;
+  --border: 1px;
+  --shadow-card: none;
+  --shadow-pop: none;
+
+  --topbar-h: 40px;
+  --sidebar-w: 194px;
+  --pad-card: 10px;
+  --pad-row-y: 5px;
+  --pad-row-x: 9px;
+  --gap: 8px;
+  --main-pad: 12px 14px 40px;
+  --read-width: none;
+
+  --tag-fill: transparent;
+  --tag-border: var(--line);
+  --row-fill: var(--bg-raised);
+  --row-hover-border: var(--accent);
+
+  --focus-ring: #4ade80;
+}
+
+:root[data-theme="terminal"] .brand span::before { content: "◆ "; color: var(--accent); }
+:root[data-theme="terminal"] .doc-title::before { content: "› "; color: var(--fg-faint); }
+:root[data-theme="terminal"] .nav-item::before { content: "· "; color: var(--fg-faint); }
+:root[data-theme="terminal"] .nav-item.active::before { content: "▸ "; color: var(--accent); }
+:root[data-theme="terminal"] .page-head h1::before { content: "// "; color: var(--fg-faint); }
+
+/* ─────────────────────────────────────────────────────────────
+   MISSION CONTROL — instrument panel. Green-black, amber caution,
+   phosphor nominal, hairline rules, monospace numerics.
+
+   Opinionated by nature, which is why it is not the default. It is
+   at its best on the dashboard, where the instruments *are* the
+   content and there is nothing for it to argue with.
+   ───────────────────────────────────────────────────────────── */
+
+:root[data-theme="mission"] {
+  --bg: #060a08;
+  --bg-raised: #0b110e;
+  --bg-inset: #050807;
+  --line: #1a2a20;
+  --line-soft: #121e17;
+
+  --fg: #c8d6cf;
+  --fg-dim: #7e948a;
+  --fg-faint: #55665e;
+
+  --accent: #7fffb0;
+  --accent-deep: #ffb347;
+  --store: #7fffb0;
+  --vault: #ffb347;
+  --warn: #ff6b6b;
+
+  --prism-a: #7fffb0;
+  --prism-b: #5ad1a0;
+  --prism-c: #ffb347;
+
+  --font-ui: var(--stack-sans);
+  --font-body: var(--stack-sans);
+  --font-display: var(--stack-mono);
+  --font-mono: var(--stack-mono);
+
+  --fs-base: 13px;
+  --fs-sm: 11.5px;
+  --fs-xs: 10px;
+  --fs-h1: 17px;
+  --fs-stat: 27px;
+  --lh: 1.5;
+  --lh-read: 1.6;
+
+  --weight-heading: 700;
+  --tracking-h: .02em;
+  --label-transform: uppercase;
+  --label-tracking: .18em;
+  --label-weight: 700;
+
+  --radius: 2px;
+  --radius-sm: 2px;
+  --radius-pill: 2px;
+  --border: 1px;
+  --shadow-card: inset 0 1px 0 rgba(127, 255, 176, .06);
+  --shadow-pop: 0 14px 34px rgba(0, 0, 0, .66);
+
+  --topbar-h: 44px;
+  --sidebar-w: 204px;
+  --pad-card: 12px;
+  --pad-row-y: 7px;
+  --pad-row-x: 11px;
+  --gap: 9px;
+  --main-pad: 16px 18px 40px;
+  --read-width: none;
+
+  --tag-fill: transparent;
+  --tag-border: var(--line);
+  --row-fill: var(--bg-raised);
+  --row-hover-border: var(--accent);
+
+  --focus-ring: #7fffb0;
+}
+
+/* Instrument affordances: readouts, not labels. */
+:root[data-theme="mission"] .stat-value { color: var(--accent); text-shadow: 0 0 14px rgba(127, 255, 176, .28); }
+:root[data-theme="mission"] .card h3, :root[data-theme="mission"] .panel h3 { color: var(--fg-dim); }
+:root[data-theme="mission"] .card { border-top: 2px solid var(--line); }
+:root[data-theme="mission"] .kv dd.warn { color: var(--accent-deep); }
+:root[data-theme="mission"] .brand span::after { content: " · OPS"; color: var(--fg-faint); font-size: .8em; letter-spacing: .18em; }

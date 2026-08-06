@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quartzite</title>
+<script>
+  // Apply the stored design language before first paint, so switching themes
+  // never flashes the previous one on reload.
+  try {
+    var t = localStorage.getItem('quartzite:theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+  } catch (e) { /* private mode; fall through to the default */ }
+</script>
+<link rel="stylesheet" href="/assets/themes.css">
+<link rel="stylesheet" href="/assets/app.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><polygon points='16,3 27,12 22,28 10,28 5,12' fill='%237dd3fc'/></svg>">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#/" aria-label="Quartzite home">
+    <svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true">
+      <polygon points="16,3 27,12 22,28 10,28 5,12" class="crystal-a"/>
+      <polygon points="16,3 22,28 10,28" class="crystal-b"/>
+    </svg>
+    <span>Quartzite</span>
+  </a>
+
+  <div class="search-wrap">
+    <input id="search" type="search" placeholder="Search documents…" autocomplete="off" spellcheck="false">
+    <div id="results" class="results" hidden></div>
+  </div>
+
+  <div class="topbar-right">
+    <span id="live" class="live" title="Server connection" hidden>
+      <span class="dot"></span><span class="live-text">connecting</span>
+    </span>
+    <select id="theme" class="theme-picker" title="Design language — ⌥T cycles">
+      <option value="void">Void</option>
+      <option value="terminal">Terminal</option>
+      <option value="mission">Mission Control</option>
+    </select>
+    <button id="reindex" class="btn" title="Rescan both corpora">Reindex</button>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="nav-group">
+      <a href="#/" class="nav-item" data-route="home">Home</a>
+      <a href="#/daily" class="nav-item" data-route="daily">Daily</a>
+      <a href="#/docs" class="nav-item" data-route="docs">All documents</a>
+      <a href="#/docs?source=store" class="nav-item" data-route="store">Store <span class="pill" id="pill-store">0</span></a>
+      <a href="#/docs?source=vault" class="nav-item" data-route="vault">Vault <span class="pill" id="pill-vault">0</span></a>
+      <a href="#/archive" class="nav-item" data-route="archive" hidden>Archive <span class="pill" id="pill-archive">0</span></a>
+      <a href="#/viewers" class="nav-item" data-route="viewers">Viewers</a>
+      <a href="#/system" class="nav-item" data-route="system">System</a>
+    </div>
+    <div class="nav-note">
+      <strong>Vault is read-only.</strong>
+      Indexed for links and search. Quartzite never writes to it.
+    </div>
+  </nav>
+
+  <main id="main" class="main"><div class="loading">Loading…</div></main>
+</div>
+
+<script src="/assets/app.js"></script>
+</body>
+</html>
