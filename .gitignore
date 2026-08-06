@@ -1,0 +1,8 @@
+# The binary
+/quartzite
+
+# Local data if someone runs with defaults in-tree — data never belongs in this repo
+/store/
+/vault/
+
+.DS_Store
