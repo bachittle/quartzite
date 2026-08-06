@@ -147,7 +147,6 @@ async function renderHome() {
   main.innerHTML = `
     <div class="page-head">
       <h1>Quartzite</h1>
-      <p data-field="summary">&nbsp;</p>
     </div>
 
     <div class="counts">
@@ -188,9 +187,9 @@ async function refreshHome() {
   setField('docs', s.docs.toLocaleString());
   setField('storeDocs', s.storeDocs.toLocaleString());
   setField('vaultDocs', s.vaultDocs.toLocaleString());
+  $('[data-field="vaultDocs"]').closest('.count').hidden = s.vaultDocs === 0;
   setField('links', s.links.toLocaleString());
   setField('broken', s.broken.toLocaleString());
-  setField('summary', `Watching two corpora. The vault is indexed read-only; everything agents write lands in the store.`);
 
   const recent = await api('/api/docs?limit=300');
   const rows = recent.docs
@@ -407,7 +406,7 @@ async function renderDocs(source) {
     ? 'Indexed read-only from the Obsidian vault. Quartzite never writes here.'
     : source === 'store'
       ? 'Quartzite\'s read-write corpus. Everything agents create lands here.'
-      : 'Both corpora, merged into one graph.';
+      : 'Everything indexed, merged into one graph.';
 
   main.innerHTML = `
     <div class="page-head">
@@ -1018,7 +1017,10 @@ async function updatePills() {
   try {
     const s = await api('/api/stats');
     $('#pill-store').textContent = s.storeDocs;
-    $('#pill-vault').textContent = s.vaultDocs;
+    const pv = $('#pill-vault');
+    pv.textContent = s.vaultDocs;
+    pv.parentElement.hidden = s.vaultDocs === 0; // same rule as the archive
+
     const pa = $('#pill-archive');
     if (pa) {
       pa.textContent = s.archived;

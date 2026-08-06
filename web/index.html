@@ -41,7 +41,7 @@
       <option value="terminal">Terminal</option>
       <option value="mission">Mission Control</option>
     </select>
-    <button id="reindex" class="btn" title="Rescan both corpora">Reindex</button>
+    <button id="reindex" class="btn" title="Rescan everything">Reindex</button>
   </div>
 </header>
 
@@ -52,14 +52,10 @@
       <a href="#/daily" class="nav-item" data-route="daily">Daily</a>
       <a href="#/docs" class="nav-item" data-route="docs">All documents</a>
       <a href="#/docs?source=store" class="nav-item" data-route="store">Store <span class="pill" id="pill-store">0</span></a>
-      <a href="#/docs?source=vault" class="nav-item" data-route="vault">Vault <span class="pill" id="pill-vault">0</span></a>
+      <a href="#/docs?source=vault" class="nav-item" data-route="vault" hidden>Vault <span class="pill" id="pill-vault">0</span></a>
       <a href="#/archive" class="nav-item" data-route="archive" hidden>Archive <span class="pill" id="pill-archive">0</span></a>
       <a href="#/viewers" class="nav-item" data-route="viewers">Viewers</a>
       <a href="#/system" class="nav-item" data-route="system">System</a>
-    </div>
-    <div class="nav-note">
-      <strong>Vault is read-only.</strong>
-      Indexed for links and search. Quartzite never writes to it.
     </div>
   </nav>
 

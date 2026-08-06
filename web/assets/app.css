@@ -70,8 +70,8 @@ a:hover { text-decoration: underline; }
 
 .live { display: flex; align-items: center; gap: 6px; font-size: var(--fs-xs); color: var(--fg-faint); font-family: var(--font-mono); }
 /* An explicit display value beats the UA stylesheet's [hidden] rule, so the
-   attribute alone would not hide this. */
-.live[hidden] { display: none; }
+   attribute alone would not hide these. */
+.live[hidden], .nav-item[hidden], .count[hidden] { display: none; }
 .live .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--fg-faint); }
 .live.on .dot { background: var(--store); box-shadow: 0 0 8px var(--store); }
 .live.off .dot { background: var(--warn); }
