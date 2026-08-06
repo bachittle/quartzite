@@ -144,6 +144,9 @@ function markNav(route) {
  */
 
 async function renderHome() {
+  // The fingerprint dedupes timer refreshes against a DOM that still holds the
+  // rows. This rebuild empties the DOM, so the fingerprint must empty with it.
+  recentFingerprint = '';
   main.innerHTML = `
     <div class="page-head">
       <h1>Quartzite</h1>
