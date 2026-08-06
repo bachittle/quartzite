@@ -11,8 +11,8 @@ go build -o quartzite ./cmd/quartzite
 ./quartzite                       # localhost:5003, store created at ./store on first run
 ```
 
-Go standard library only. `go.mod` has no `require` block. One binary; move the
-folder anywhere and it still runs.
+Go standard library only. `go.mod` has no `require` block. Requires Go 1.26+
+to build. One binary; move the folder anywhere and it still runs.
 
 ## The two corpora
 
