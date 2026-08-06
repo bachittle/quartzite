@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Welcome to Quartzite</title>
+<link rel="stylesheet" href="welcome.css">
+</head>
+<body>
+
+<canvas id="lattice" aria-hidden="true"></canvas>
+
+<main>
+  <header class="hero">
+    <div class="eyebrow">a document that is not a file</div>
+    <h1>Welcome to <span class="grad">Quartzite</span></h1>
+    <p class="lede">
+      You are reading a <strong>folder</strong>. This document is
+      <code>index.html</code>, <code>welcome.css</code> and <code>welcome.js</code>,
+      served together at their own URL so the relative paths just work.
+      Obsidian could not hold this. That is the reason Quartzite exists.
+    </p>
+  </header>
+
+  <section class="cards">
+    <article class="card">
+      <h2>Three shapes</h2>
+      <p>A document is whichever of these fits the thing you are storing.</p>
+      <ul class="shapes">
+        <li><span class="k">file</span><span>a single <code>notes.md</code> or <code>chart.html</code></span></li>
+        <li><span class="k">folder</span><span>an entry point plus its assets — like this one</span></li>
+        <li><span class="k">zip</span><span>the same, served straight out of the archive</span></li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <h2>Two corpora, one graph</h2>
+      <p>
+        Point Quartzite at an Obsidian vault and it is indexed
+        <strong>read-only</strong> — notes that agents can link to and search,
+        but never damage. Everything written lands in the store instead.
+      </p>
+      <div class="split">
+        <div class="half vault"><span>vault</span><em>read-only</em></div>
+        <div class="half store"><span>store</span><em>read-write</em></div>
+      </div>
+    </article>
+  </section>
+
+  <section class="demo">
+    <h2>Viewers are documents too</h2>
+    <p>
+      A file at <code>viewers/&lt;format&gt;.html</code> claims that format. It runs
+      sandboxed and receives its target over <code>postMessage</code>. Adding support
+      for a new format means writing a document — no Go code, no restart.
+    </p>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="create" role="tab">Create a note</button>
+      <button class="tab" data-tab="bundle" role="tab">Create a bundle</button>
+      <button class="tab" data-tab="viewer" role="tab">Add a format</button>
+    </div>
+
+    <div class="panes">
+      <pre class="pane active" data-pane="create"><code>curl -X POST localhost:5003/api/docs \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "title": "Rendering Notes",
+    "format": "md",
+    "content": "Cubed sphere beat icosphere.\n\nSee [[Welcome]]."
+  }'</code></pre>
+
+      <pre class="pane" data-pane="bundle"><code>curl -X POST localhost:5003/api/docs \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "title": "Voxel Planet",
+    "files": {
+      "index.html": "&lt;canvas id=c&gt;&lt;script src=sim.js&gt;&lt;/script&gt;",
+      "sim.js":     "// runs at /d/{id}/sim.js"
+    }
+  }'</code></pre>
+
+      <pre class="pane" data-pane="viewer"><code>curl -X POST localhost:5003/api/docs \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "path": "viewers/csv.html",
+    "content": "&lt;script&gt;
+      addEventListener(\"message\", e =&gt; {
+        if (e.data.type !== \"quartzite:doc\") return
+        render(e.data.content)   // now .csv has a viewer
+      })
+      parent.postMessage({type:\"quartzite:ready\"}, \"*\")
+    &lt;/script&gt;"
+  }'</code></pre>
+    </div>
+  </section>
+
+  <section class="counter-demo">
+    <h2>And it is really running</h2>
+    <p>Not a screenshot. This bundle's JavaScript is executing in a sandboxed frame.</p>
+    <div class="counter">
+      <button id="minus" aria-label="decrement">−</button>
+      <output id="count">0</output>
+      <button id="plus" aria-label="increment">+</button>
+    </div>
+    <p class="hint" id="hint">Click a button.</p>
+  </section>
+
+  <footer>
+    <p>
+      Go standard library only · no dependencies · one binary ·
+      <code id="stamp"></code>
+    </p>
+  </footer>
+</main>
+
+<script src="welcome.js"></script>
+</body>
+</html>
