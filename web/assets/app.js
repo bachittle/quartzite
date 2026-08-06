@@ -406,7 +406,7 @@ async function renderDocs(source) {
   const data = await api('/api/docs' + qs);
   const label = source === 'store' ? 'Store' : source === 'vault' ? 'Vault' : 'All documents';
   const note = source === 'vault'
-    ? 'Indexed read-only from the Obsidian vault. Quartzite never writes here.'
+    ? 'Indexed read-only from the vault. Quartzite never writes here.'
     : source === 'store'
       ? 'Quartzite\'s read-write corpus. Everything agents create lands here.'
       : 'Everything indexed, merged into one graph.';

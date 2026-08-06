@@ -1,7 +1,7 @@
-// Package vault indexes the Obsidian vault.
+// Package vault indexes the vault — a folder of existing notes.
 //
 // This corpus is strictly read-only. Nothing in Quartzite writes here, which is
-// the whole reason agents can be given free rein over the store: the 748 notes
+// the whole reason agents can be given free rein over the store: the notes
 // that already exist cannot be damaged by a bad generation.
 package vault
 

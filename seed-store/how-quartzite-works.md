@@ -18,8 +18,9 @@ Quartzite indexes two places and merges them into one link graph.
 | vault | `-vault` / `QUARTZITE_VAULT` (optional) | read-only | existing notes, worth linking to, not worth risking |
 | store | `-store` / `QUARTZITE_STORE` | read-write | everything agents create |
 
-The vault is optional — with no vault configured, Quartzite serves the store
-alone.
+"Vault" is just the conventional name for a folder of notes you already have —
+an existing knowledge graph worth linking into. It is optional: with no vault
+configured, Quartzite serves the store alone.
 
 Nothing Quartzite does can write to the vault. That is not a policy setting,
 it is the absence of any code path that opens a vault file for writing. It is
@@ -39,7 +40,7 @@ A bundle gets a URL prefix of its own, which is what makes relative
 
 ## Links
 
-Content uses `[[Title]]`, the way the vault already does. The API uses stable
+Content links by `[[Title]]` — the wikilink convention. The API uses stable
 IDs. Renaming a document rewrites inbound links so a reference cannot silently
 rot, while the ID stays fixed for anything holding it.
 
@@ -64,6 +65,5 @@ has no same-origin access to the shell.
 
 ## Not in v1
 
-Daily notes, calendars, Obsidian plugin parity, graph visualisation,
-in-browser editing. v1 proves the write loop and the format model — those
-had to be right first.
+Daily notes, calendars, graph visualisation, in-browser editing. v1 proves
+the write loop and the format model — those had to be right first.

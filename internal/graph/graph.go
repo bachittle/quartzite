@@ -1,7 +1,7 @@
 // Package graph resolves [[wikilinks]] into a navigable link graph.
 //
-// Links are written by title, the way Obsidian does it, because the vault is
-// read-only and already full of them. IDs exist for the API, where a stable
+// Links are written by title — the wikilink convention — because a vault of
+// existing notes is read-only and already full of them. IDs exist for the API, where a stable
 // reference matters more than a readable one.
 package graph
 
@@ -121,7 +121,7 @@ func Build(docs []*model.Doc) *Graph {
 		g.byTitle[k] = d
 	}
 
-	// Obsidian also allows a link to name a path rather than a title, so index
+	// A wikilink may also name a path rather than a title, so index
 	// both the full path and the path without its extension.
 	for _, d := range docs {
 		p := strings.ToLower(d.Path)
@@ -136,7 +136,7 @@ func Build(docs []*model.Doc) *Graph {
 		}
 	}
 
-	// Obsidian's shortest form links by bare filename — [[2026-07-28]] finds
+	// The shortest wikilink form is a bare filename — [[2026-07-28]] finds
 	// Daily Notes/2026-07-28.md. Titles can't carry this (TitleOf rewrites
 	// hyphens to spaces), so index the base name too, store winning collisions
 	// under the same rule as titles.
@@ -185,7 +185,7 @@ func Build(docs []*model.Doc) *Graph {
 }
 
 // resolve looks a target up by title first, then by path, then by bare
-// filename, matching Obsidian's precedence.
+// filename — the conventional wikilink precedence.
 func (g *Graph) resolve(target string) (*model.Doc, bool) {
 	k := strings.ToLower(strings.TrimSpace(target))
 	if d, ok := g.byTitle[k]; ok {

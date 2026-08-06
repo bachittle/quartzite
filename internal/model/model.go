@@ -29,7 +29,7 @@ type Source string
 const (
 	// SourceStore is Quartzite's read-write store.
 	SourceStore Source = "store"
-	// SourceVault is the Obsidian vault, indexed read-only and never written.
+	// SourceVault is the vault of existing notes, indexed read-only and never written.
 	SourceVault Source = "vault"
 )
 

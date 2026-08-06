@@ -2,9 +2,8 @@
 
 A local-first knowledge base built for AI agents, on `localhost:5003`.
 
-Obsidian's shape — plain files, wikilinks, a link graph — but a document does
-not have to be markdown, and does not have to be a *file*. Agents write here;
-you read.
+Plain files, wikilinks, a knowledge graph — but a document does not have to be
+markdown, and does not have to be a *file*. Agents write here; you read.
 
 ```
 go build -o quartzite ./cmd/quartzite
@@ -21,14 +20,16 @@ to build. One binary; move the folder anywhere and it still runs.
 | vault | `-vault` / `QUARTZITE_VAULT` — optional | **read-only**, indexed for links and search |
 | store | `-store` / `QUARTZITE_STORE` — default `./store` | read-write, everything agents create |
 
-Both corpora are external folders Quartzite opens, the way Obsidian opens a
-vault. Neither lives in this repo. A store path that does not exist yet is
-created and seeded from `seed-store/` — a fresh store still has the markdown
-viewer and the [[Welcome]] bundle, so the app works from minute one. No vault
-is a valid configuration: the server runs with the store alone.
+Both corpora are external folders Quartzite opens; neither lives in this repo.
+"Vault" is just the conventional name for notes you already have — any folder
+of markdown you want in the graph but never written to. A store path that does
+not exist yet is created and seeded from `seed-store/` — a fresh store still
+has the markdown viewer and the [[Welcome]] bundle, so the app works from
+minute one. No vault is a valid configuration: the server runs with the store
+alone.
 
 ```
-./quartzite -addr :5003 -store ~/quartzite-store -vault ~/obsidian-vault
+./quartzite -addr :5003 -store ~/quartzite-store -vault ~/notes
 QUARTZITE_STORE=~/quartzite-store ./quartzite    # env vars work too; flags win
 ```
 
@@ -116,7 +117,7 @@ curl -X POST localhost:5003/api/docs -H 'Content-Type: application/json' \
 cmd/quartzite/       entry point
 internal/model/      Doc, Kind, Source, Stats
 internal/store/      read-write corpus; bundles, IDs, create/update/rename
-internal/vault/      read-only Obsidian index
+internal/vault/      read-only index of existing notes
 internal/graph/      wikilink extraction, resolution, backlinks
 internal/parse/      frontmatter, excerpts, code stripping
 internal/metrics/    self-observability for the dashboard
@@ -134,5 +135,5 @@ documents, which is cheaper than the dependency a file watcher would cost.
 
 ## Not in v1
 
-Daily notes, calendars, Obsidian plugin parity, graph visualisation, in-browser
-editing. v1 proves the write loop and the format model.
+Daily notes, calendars, graph visualisation, in-browser editing. v1 proves the
+write loop and the format model.

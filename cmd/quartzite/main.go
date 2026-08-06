@@ -30,7 +30,7 @@ func main() {
 	storeDir := flag.String("store", envOr("QUARTZITE_STORE", filepath.Join(root, "store")),
 		"read-write document store; created and seeded if it does not exist yet")
 	vaultDir := flag.String("vault", envOr("QUARTZITE_VAULT", ""),
-		"read-only Obsidian vault (indexed, never written); empty runs store-only")
+		"read-only folder of existing notes (indexed, never written); empty runs store-only")
 	webDir := flag.String("web", filepath.Join(root, "web"), "static frontend directory")
 	watch := flag.Duration("watch", 3*time.Second, "rescan interval; 0 disables")
 	flag.Parse()
@@ -103,9 +103,9 @@ func envOr(key, def string) string {
 }
 
 // seedIfNew copies the repo's seed-store into a store that does not exist yet
-// (or exists but holds no documents), the way opening a fresh Obsidian vault
-// still gives you a working app. Viewers are documents, so an unseeded empty
-// store would render nothing but markdown.
+// (or exists but holds no documents), so opening a brand-new store still gives
+// you a working app. Viewers are documents, so an unseeded empty store would
+// render nothing but markdown.
 func seedIfNew(dst, seed string) error {
 	if entries, err := os.ReadDir(dst); err == nil {
 		for _, e := range entries {
