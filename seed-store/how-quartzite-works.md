@@ -62,9 +62,8 @@ Adding a format means writing a document. No Go code, no restart, no registry
 file to edit. A broken viewer breaks its own pane and nothing else, because it
 has no same-origin access to the shell.
 
-## What v1 deliberately leaves out
+## Not in v1
 
-Daily notes, calendars, and Obsidian plugin parity are not here yet. Neither
-is a graph visualisation or in-browser editing. They are deferred rather than
-rejected — the point of v1 was to prove the write loop and the format model,
-and those are the parts that had to be right first.
+Daily notes, calendars, Obsidian plugin parity, graph visualisation,
+in-browser editing. v1 proves the write loop and the format model — those
+had to be right first.

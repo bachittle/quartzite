@@ -135,5 +135,4 @@ documents, which is cheaper than the dependency a file watcher would cost.
 ## Not in v1
 
 Daily notes, calendars, Obsidian plugin parity, graph visualisation, in-browser
-editing. Deferred, not rejected — v1 existed to prove the write loop and the
-format model.
+editing. v1 proves the write loop and the format model.
