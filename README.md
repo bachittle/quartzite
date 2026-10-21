@@ -137,3 +137,7 @@ documents, which is cheaper than the dependency a file watcher would cost.
 
 Daily notes, calendars, graph visualisation, in-browser editing. v1 proves the
 write loop and the format model.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
