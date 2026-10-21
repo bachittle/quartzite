@@ -5,10 +5,18 @@ A local-first knowledge base built for AI agents, on `localhost:5003`.
 Plain files, wikilinks, a knowledge graph — but a document does not have to be
 markdown, and does not have to be a *file*. Agents write here; you read.
 
+Quartzite is a new note-taking system. It keeps what works in the tools people
+already use — files you own, `[[wikilinks]]`, a graph of how notes connect —
+and adds what AI agents need: a write API, documents that are folders or
+apps, and viewers that are themselves documents.
+
 ```
 go build -o quartzite ./cmd/quartzite
 ./quartzite                       # localhost:5003, store created at ./store on first run
 ```
+
+Then open <http://localhost:5003>. A fresh install already has a Welcome
+document and a dashboard to look at. Port taken? `./quartzite -addr :5004`.
 
 Go standard library only. `go.mod` has no `require` block. Requires Go 1.26+
 to build. One binary; move the folder anywhere and it still runs.
@@ -91,6 +99,7 @@ To navigate the shell from inside a viewer:
 | `GET` | `/api/docs/{id}/backlinks` | inbound refs |
 | `GET` | `/api/search?q=` | title > tag > path > body ranking |
 | `GET` | `/api/stats`, `/api/metrics`, `/api/viewers` | dashboard data |
+| `GET` | `/api/health` | `{status, docs, time}` — is the server up |
 | `POST` | `/api/reindex` | force a rescan |
 | `GET` | `/api/events` | SSE: `doc:created`, `doc:updated`, `doc:renamed`, `doc:deleted`, `index` |
 | `GET` | `/d/{id}/...` | serve a document and its assets |
