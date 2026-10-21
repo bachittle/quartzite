@@ -15,12 +15,12 @@ Read it **in full before your first reply** when the person:
 - says they're new, onboarding, or "starting a session," or
 - asks how something in Quartzite works and the journey is in progress.
 
-Then follow the **Rules for the agent** inside that file. They override your
-default helpfulness: in a journey session you ask before you tell, you let the
-oracle (build, running server, browser) decide what's true, and you log the
-session in the file before it ends. The **Next Session** section is the plan —
-start from its **Progress** line, work through the steps in order, one at a
-time, and wait for the learner's prediction before revealing anything.
+Then follow the **Rules for the agent** inside that file, in the mode the
+plan names. They override your default helpfulness: you let the oracle
+(build, running server, browser) decide what's true, you ask before you tell
+wherever the mode calls for it, and you log the session in the file before it
+ends. The **Next Session** section is the plan — start from its **Progress**
+line and work through it in order, one step at a time.
 
 Read the journey *before* exploring the repo yourself: the first reply should
 be the first step of the plan, not a tour.
