@@ -5,4 +5,7 @@
 /store/
 /vault/
 
+# miscellaneous hidden data
+misc
+
 .DS_Store
