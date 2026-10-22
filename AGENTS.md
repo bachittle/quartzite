@@ -30,6 +30,21 @@ Not in a journey session? Ignore `misc/` and work normally.
 `misc/` is gitignored on purpose: a journey is one learner's record, not
 project documentation. Never commit it.
 
+## Setting it up for someone
+
+If a person asked you to install and run Quartzite for them (the README's
+quickstart), they want to keep what gets written, so don't use a scratch
+store.
+
+- Build: `go build -o quartzite ./cmd/quartzite`. If `go` is missing, install
+  Go 1.26+ first (`brew install go` on macOS).
+- Run: `./quartzite -vault <their notes folder>`. The store defaults to
+  `./store` in the clone; ask before choosing somewhere else.
+- Never point `-store` at the vault, at a folder inside it, or at a folder
+  that contains it.
+- Then tell them to open `http://localhost:5003`. For writing documents, read
+  `docs/api.md`.
+
 ## Working on the code
 
 - Go 1.26+, **standard library only.** Never add a `require` to `go.mod`.
@@ -42,4 +57,5 @@ project documentation. Never commit it.
   file for writing; keep it that way.
 - Commit messages: `Area: what changed` (e.g. `Shell: …`, `Docs: …`,
   `Seed store: …`), with a body that explains why.
-- Layout and API reference: `README.md`.
+- Layout and internals: `docs/architecture.md`. API and viewer protocol:
+  `docs/api.md`.
