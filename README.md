@@ -28,7 +28,8 @@ connect. Quartzite keeps all of that and adds what an AI agent needs:
 ## Your vault stays yours
 
 Point Quartzite at your Obsidian vault and it reads and links your notes, but
-never writes them. Your agent writes into a separate folder, the **store**.
+never writes them. New writing, yours or your agent's, goes into a separate
+folder, the **store**.
 Both show up in one graph and one search.
 
 Keep the two apart: don't point the store and the vault at the same folder,
