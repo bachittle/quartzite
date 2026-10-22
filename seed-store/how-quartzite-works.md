@@ -22,9 +22,12 @@ Quartzite indexes two places and merges them into one link graph.
 an existing knowledge graph worth linking into. It is optional: with no vault
 configured, Quartzite serves the store alone.
 
-Nothing Quartzite does can write to the vault. That is not a policy setting,
-it is the absence of any code path that opens a vault file for writing. It is
-what makes it safe to hand an agent the write API without supervision.
+Quartzite never opens a vault file for writing. That is not a policy setting,
+it is the absence of any code path that does it, and it is what makes it safe
+to hand an agent the write API. One caveat for now: keep the store a separate
+folder from the vault, with no symlinks leading into it. The store's write
+path doesn't check for overlap or follow symlinks yet, so either setup would
+let a store write land in the vault.
 
 ## A document is not a file
 
