@@ -22,7 +22,7 @@ connect. Quartzite keeps all of that and adds what an AI agent needs:
   isn't an error. The dashboard counts them, so you can see what's left to write.
 
 <p align="center">
-  <img src="docs/images/graph.svg" alt="A knowledge graph drawn as a night sky: pale blue stars are your notes, gold constellations are documents an agent wrote, linked into them">
+  <img src="docs/images/graph.svg" alt="A knowledge graph drawn as a night sky: pale blue stars are your notes, gold constellations are documents written in Quartzite, linked into them">
 </p>
 
 ## Your vault stays yours
