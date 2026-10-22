@@ -1,152 +1,92 @@
-# Quartzite
+<p align="center">
+  <img src="docs/images/logo.svg" width="128" alt="Quartzite logo: a quartz crystal drawn as a constellation">
+</p>
 
-A local-first knowledge base built for AI agents, on `localhost:5003`.
+<h1 align="center">Quartzite</h1>
 
-Plain files, wikilinks, a knowledge graph — but a document does not have to be
-markdown, and does not have to be a *file*. Agents write here; you read.
+<p align="center">
+  A knowledge base you share with your AI agent:<br>
+  your Obsidian notes, plus a space your agent writes into.
+</p>
 
-Quartzite is a new note-taking system. It keeps what works in the tools people
-already use — files you own, `[[wikilinks]]`, a graph of how notes connect —
-and adds what AI agents need: a write API, documents that are folders or
-apps, and viewers that are themselves documents.
+## If you use Obsidian, you know most of this
+
+A folder of markdown, `[[wikilinks]]`, backlinks, a graph of how your notes
+connect. Quartzite keeps all of that and adds what an AI agent needs:
+
+- **A write API.** Your agent creates, edits and renames documents over HTTP.
+  Renaming rewrites the links that point at it, so nothing rots.
+- **Documents that aren't just markdown.** A document can be an HTML page, a
+  chart, or a small interactive app with its own scripts and assets.
+- **Broken links as a to-do list.** A link to a note that doesn't exist yet
+  isn't an error. The dashboard counts them, so you can see what's left to write.
+
+<p align="center">
+  <img src="docs/images/graph.svg" alt="A knowledge graph drawn as a night sky: pale blue stars are your notes, gold constellations are documents an agent wrote, linked into them">
+</p>
+
+## Your vault stays yours
+
+Point Quartzite at your Obsidian vault and it reads and links your notes, but
+never writes them. Your agent writes into a separate folder, the **store**.
+Both show up in one graph and one search.
+
+Keep the two apart: don't point the store and the vault at the same folder,
+and don't put a link inside the store that leads into your vault. The details
+are in [docs/architecture.md](docs/architecture.md#the-vault-is-read-only).
+
+## Get started with Claude Code
+
+Quartzite is a small Go program you build from source. The easiest way is to
+let your agent do it. Paste this into Claude Code:
+
+> Clone https://github.com/bachittle/quartzite, build it, and run it with my
+> Obsidian vault at `~/path/to/vault` as the read-only vault.
+
+Then open <http://localhost:5003>. The repo's [AGENTS.md](AGENTS.md) tells your
+agent how to build and run it.
+
+<details>
+<summary>Or by hand</summary>
+
+You need [Go](https://go.dev/dl/) 1.26 or newer (`brew install go` on a Mac).
 
 ```
+git clone https://github.com/bachittle/quartzite
+cd quartzite
 go build -o quartzite ./cmd/quartzite
-./quartzite                       # localhost:5003, store created at ./store on first run
+./quartzite -vault ~/path/to/vault
 ```
 
-Then open <http://localhost:5003>. A fresh install already has a Welcome
-document and a dashboard to look at. Port taken? `./quartzite -addr :5004`.
+Without `-vault`, it runs with the store alone. The store is created at
+`./store` on first run, with a Welcome document to start from. Port taken?
+Add `-addr :5004`.
 
-Go standard library only. `go.mod` has no `require` block. Requires Go 1.26+
-to build. One binary; move the folder anywhere and it still runs.
+</details>
 
-## The two corpora
+## What to ask your agent next
 
-| corpus | flag / env | access |
-|---|---|---|
-| vault | `-vault` / `QUARTZITE_VAULT` — optional | **read-only**, indexed for links and search |
-| store | `-store` / `QUARTZITE_STORE` — default `./store` | read-write, everything agents create |
+- *"Read docs/api.md, then write a note about this week's work that links to
+  my notes on it."*
+- *"Make an interactive page that explains how my notes on X fit together."*
+- *"Find everything that links to my note on Y and summarize it in a new note."*
 
-Both corpora are external folders Quartzite opens; neither lives in this repo.
-"Vault" is just the conventional name for notes you already have — any folder
-of markdown you want in the graph but never written to. A store path that does
-not exist yet is created and seeded from `seed-store/` — a fresh store still
-has the markdown viewer and the [[Welcome]] bundle, so the app works from
-minute one. No vault is a valid configuration: the server runs with the store
-alone.
+Leave the browser open while it works. The dashboard updates live as documents
+land.
 
-```
-./quartzite -addr :5003 -store ~/quartzite-store -vault ~/notes
-QUARTZITE_STORE=~/quartzite-store ./quartzite    # env vars work too; flags win
-```
+## Not there yet
 
-Nothing writes to the vault. That is not a config flag — there is no code path
-that opens a vault file for writing. It is what makes it safe to hand an agent
-the write API unsupervised.
+There is no graph view in the app yet, and no editing in the browser. Keep
+writing in Obsidian; Quartzite picks up your changes within a few seconds.
 
-## A document is not a file
+## Going deeper
 
-- **file** — `notes.md`, `chart.html`
-- **folder** — an entry point plus assets, served at `/d/{id}/`
-- **zip** — the same, read straight out of the archive
-
-Folders and zips both satisfy `fs.FS`, so they share one serving path. Each
-bundle gets a URL prefix of its own, which is why relative `<script src>` and
-`fetch()` inside a bundle resolve the way its author expected. A directory is a
-bundle when it contains `index.html` (or `index.htm` / `main.html` / `app.html`);
-otherwise it is just a namespace.
-
-Quartzite **serves** bundles, it does not build them. No npm, no bundler —
-bundles arrive pre-built and self-contained.
-
-## Links
-
-Content uses `[[Title]]`. The API uses stable IDs. Renaming rewrites inbound
-links so references cannot rot, while the ID stays fixed. Unresolved links are
-not errors: they render as broken and show in the dashboard count, because
-writing toward a document that does not exist yet is a legitimate way to work.
-
-## Viewers are documents
-
-A document at `viewers/<format>.html` claims that format. It runs sandboxed
-(`allow-scripts`, no same-origin), receives its target over `postMessage`, and
-can render anything. Adding a format means writing a document — no Go code, no
-restart. A broken viewer breaks its own pane and nothing else.
-
-```js
-addEventListener('message', (e) => {
-  if (e.data.type !== 'quartzite:doc') return
-  render(e.data.content)          // e.data.doc, e.data.links also provided
-})
-parent.postMessage({ type: 'quartzite:ready' }, '*')
-```
-
-To navigate the shell from inside a viewer:
-`parent.postMessage({type:'quartzite:navigate', id}, '*')`.
-
-## API
-
-| method | path | notes |
-|---|---|---|
-| `GET` | `/api/docs` | `?source=store\|vault&kind=&format=&limit=` |
-| `POST` | `/api/docs` | `{title, format, content}` or `{title, files:{...}}` for a bundle |
-| `GET` | `/api/docs/{id}` | doc + content + resolved links + backlinks + viewer |
-| `PUT` | `/api/docs/{id}` | `{content, file?}` — `file` targets one file in a bundle |
-| `PATCH` | `/api/docs/{id}` | `{title}` — retitles and rewrites inbound links |
-| `DELETE` | `/api/docs/{id}` | store only; vault returns 403 |
-| `GET` | `/api/docs/{id}/raw` | raw bytes |
-| `GET` | `/api/docs/{id}/backlinks` | inbound refs |
-| `GET` | `/api/search?q=` | title > tag > path > body ranking |
-| `GET` | `/api/stats`, `/api/metrics`, `/api/viewers` | dashboard data |
-| `GET` | `/api/health` | `{status, docs, time}` — is the server up |
-| `POST` | `/api/reindex` | force a rescan |
-| `GET` | `/api/events` | SSE: `doc:created`, `doc:updated`, `doc:renamed`, `doc:deleted`, `index` |
-| `GET` | `/d/{id}/...` | serve a document and its assets |
-
-Create a note:
-
-```bash
-curl -X POST localhost:5003/api/docs -H 'Content-Type: application/json' \
-  -d '{"title":"Rendering Notes","format":"md","content":"See [[Welcome]]."}'
-```
-
-Create a multi-file bundle:
-
-```bash
-curl -X POST localhost:5003/api/docs -H 'Content-Type: application/json' \
-  -d '{"title":"Voxel Planet","files":{
-        "index.html":"<canvas id=c></canvas><script src=\"sim.js\"></script>",
-        "sim.js":"// served at /d/{id}/sim.js"}}'
-```
-
-## Layout
-
-```
-cmd/quartzite/       entry point
-internal/model/      Doc, Kind, Source, Stats
-internal/store/      read-write corpus; bundles, IDs, create/update/rename
-internal/vault/      read-only index of existing notes
-internal/graph/      wikilink extraction, resolution, backlinks
-internal/parse/      frontmatter, excerpts, code stripping
-internal/metrics/    self-observability for the dashboard
-internal/api/        HTTP surface, SSE hub, cross-corpus service
-web/                 dashboard and reader shell
-seed-store/          what a brand-new store is seeded with (viewers, Welcome)
-seed.sh              bulk-import a folder of HTML cards into a store
-```
-
-The store itself is not here — it is your data, in whatever folder you point
-`-store` at.
-
-Indexing is a full rescan on a 3s timer plus after every write — ~170ms for 780
-documents, which is cheaper than the dependency a file watcher would cost.
-
-## Not in v1
-
-Daily notes, calendars, graph visualisation, in-browser editing. v1 proves the
-write loop and the format model.
+- [docs/architecture.md](docs/architecture.md): how the store, vault, documents,
+  links and viewers work, and where the code lives.
+- [docs/api.md](docs/api.md): every endpoint, with examples, and the protocol
+  documents use to talk to the app.
+- [AGENTS.md](AGENTS.md): rules for agents (and people) changing the code.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Quartzite logo: a quartz crystal drawn as a constellation in a night sky">
+<defs>
+<radialGradient id="sky" cx="50%" cy="38%" r="70%"><stop offset="0" stop-color="#16224a"/><stop offset="1" stop-color="#04060d"/></radialGradient>
+<radialGradient id="glow"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".28" stop-color="#fff" stop-opacity=".3"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+<linearGradient id="faceL" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#96b4ff" stop-opacity=".22"/><stop offset="1" stop-color="#96b4ff" stop-opacity=".04"/></linearGradient>
+<linearGradient id="faceR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd68c" stop-opacity=".2"/><stop offset="1" stop-color="#ffd68c" stop-opacity=".03"/></linearGradient>
+<linearGradient id="cap" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff3d6" stop-opacity=".32"/><stop offset="1" stop-color="#d6e2ff" stop-opacity=".1"/></linearGradient>
+</defs>
+<rect width="512" height="512" rx="112" fill="url(#sky)"/>
+<g fill="#cdd7f2">
+<circle cx="70" cy="96" r="1.2" opacity=".5"/><circle cx="120" cy="58" r=".9" opacity=".35"/><circle cx="430" cy="70" r="1.1" opacity=".45"/>
+<circle cx="458" cy="236" r=".9" opacity=".35"/><circle cx="52" cy="402" r="1.1" opacity=".4"/><circle cx="446" cy="440" r="1" opacity=".4"/>
+<circle cx="388" cy="476" r=".8" opacity=".3"/><circle cx="100" cy="470" r=".8" opacity=".3"/><circle cx="64" cy="228" r=".8" opacity=".3"/>
+</g>
+<!-- facets: left (vault blue), right (store gold), cap -->
+<path d="M168 178 L256 214 L256 440 L168 402 Z" fill="url(#faceL)"/>
+<path d="M256 214 L344 178 L344 402 L256 440 Z" fill="url(#faceR)"/>
+<path d="M256 70 L168 178 L256 214 L344 178 Z" fill="url(#cap)"/>
+<!-- links reaching out of the crystal -->
+<g stroke-linecap="round" fill="none">
+<path d="M344 178 L418 128 M344 402 L414 352 M418 128 L414 352" stroke="#ffd68c" stroke-opacity=".45" stroke-width="2"/>
+<path d="M168 178 L94 268 M168 402 L94 268" stroke="#96b4ff" stroke-opacity=".4" stroke-width="2"/>
+</g>
+<!-- the crystal's edges -->
+<g stroke-linecap="round" stroke-linejoin="round" fill="none" stroke-width="3">
+<path d="M256 70 L168 178 L168 402 L256 440 M256 214 L256 440 M168 178 L256 214" stroke="#d6e2ff" stroke-opacity=".8"/>
+<path d="M256 70 L344 178 L344 402 L256 440 M256 214 L344 178 M256 70 L256 214" stroke="#ffd98a" stroke-opacity=".85"/>
+</g>
+<!-- stars at the vertices -->
+<g fill="url(#glow)">
+<circle cx="256" cy="70" r="46"/><circle cx="256" cy="214" r="26"/><circle cx="344" cy="178" r="22"/><circle cx="168" cy="178" r="22"/>
+<circle cx="256" cy="440" r="24"/><circle cx="418" cy="128" r="16"/><circle cx="94" cy="268" r="16"/>
+</g>
+<circle cx="256" cy="70" r="9" fill="#fff3d6"/>
+<g fill="#ffd98a"><circle cx="344" cy="178" r="6.5"/><circle cx="344" cy="402" r="5.5"/><circle cx="256" cy="214" r="7"/><circle cx="418" cy="128" r="5"/><circle cx="414" cy="352" r="4"/></g>
+<g fill="#d6e2ff"><circle cx="168" cy="178" r="6.5"/><circle cx="168" cy="402" r="5.5"/><circle cx="256" cy="440" r="6.5"/><circle cx="94" cy="268" r="5"/></g>
+</svg>
